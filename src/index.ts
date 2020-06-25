@@ -40,7 +40,7 @@ class LinearCiReleaseTool extends Command {
 
     for (const issue of stagedIssues) {
 
-      if (flags.labels.length > 0) {
+      if (flags.labels && flags.labels.length > 0) {
         const matchesLabel = issue.labels.nodes.map((l: any) => l.name).some((label: any) => {
           return flags.labels.includes(label);
         })
