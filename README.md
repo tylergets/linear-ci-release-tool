@@ -19,7 +19,7 @@ $ npm install -g linear-ci-release-tool
 $ linear-ci-release-tool COMMAND
 running command...
 $ linear-ci-release-tool (-v|--version|version)
-linear-ci-release-tool/0.0.0 linux-x64 node-v12.4.0
+linear-ci-release-tool/0.0.1 linux-x64 node-v12.4.0
 $ linear-ci-release-tool --help [COMMAND]
 USAGE
   $ linear-ci-release-tool COMMAND

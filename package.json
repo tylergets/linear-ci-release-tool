@@ -1,7 +1,7 @@
 {
   "name": "linear-ci-release-tool",
   "description": "Bulk move issues on linear",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Tyler Getsay",
   "bin": {
     "linear-ci-release-tool": "./bin/run"
