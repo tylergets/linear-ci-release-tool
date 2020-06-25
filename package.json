@@ -1,0 +1,53 @@
+{
+  "name": "linear-ci-release-tool",
+  "description": "Bulk move issues on linear",
+  "version": "0.0.0",
+  "author": "Tyler Getsay",
+  "bin": {
+    "linear-ci-release-tool": "./bin/run"
+  },
+  "bugs": "https://github.com/Development/linear-ci-release-tool/issues",
+  "dependencies": {
+    "@oclif/command": "^1.6.1",
+    "@oclif/config": "^1.15.1",
+    "@oclif/plugin-help": "^3.1.0",
+    "graphql": "^15.1.0",
+    "graphql-request": "^2.1.0-next.1",
+    "graphql-tag": "^2.10.3",
+    "node-fetch": "^2.6.0",
+    "tslib": "^1.13.0"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.22.2",
+    "@types/node": "^10.17.26",
+    "eslint": "^5.16.0",
+    "eslint-config-oclif": "^3.1.0",
+    "eslint-config-oclif-typescript": "^0.1.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "homepage": "https://github.com/Development/linear-ci-release-tool",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "bin": "linear-ci-release-tool"
+  },
+  "repository": "Development/linear-ci-release-tool",
+  "scripts": {
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
+    "test": "echo NO TESTS",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts"
+}

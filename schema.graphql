@@ -1,0 +1,3829 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+interface Node {
+  "The unique identifier of the entity."
+  id: ID!
+}
+
+"An API key. Grants access to the users resources."
+type ApiKey implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The unique identifier of the entity."
+  id: ID!
+  "The label of the API key."
+  label: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type ApiKeyConnection {
+  edges: [ApiKeyEdge!]!
+  nodes: [ApiKey!]!
+  pageInfo: PageInfo!
+}
+
+type ApiKeyEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: ApiKey!
+}
+
+type ApiKeyPayload {
+  "The API key that was created."
+  apiKey: ApiKey!
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type ArchivePayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"Contains requested archived model objects."
+type ArchiveResponse {
+  "A JSON serialized collection of model objects loaded from the archive"
+  archive: String!
+  "The version of the remote database. Incremented by 1 for each migration run on the database."
+  databaseVersion: Float!
+  "The total number of entities in the archive."
+  totalCount: Float!
+}
+
+type AuthResolverResponse {
+  "Should the signup flow allow whitelisting the domain."
+  allowDomainAccess: Boolean
+  "Organizations this account has access to, but is not yet a member."
+  availableOrganizations: [Organization!]
+  "Email for the authenticated account."
+  email: String
+  "JWT token for authentication of the account."
+  token: String
+  "Users belonging to this account."
+  users: [User!]!
+}
+
+type CollaborationDocumentUpdatePayload {
+  "Document steps the client has not seen yet and need to rebase it's local steps on."
+  steps: StepsResponse
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"A comment associated with an issue."
+type Comment implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The comment content in markdown format."
+  body: String!
+  "Comment content as a Prosemirror document."
+  bodyData: JSON
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The time user edited the comment."
+  editedAt: DateTime
+  "The unique identifier of the entity."
+  id: ID!
+  "The issue that the comment is associated with."
+  issue: Issue!
+  "Emoji reactions on the comment."
+  reactionData: [JSON!]!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "The user who wrote the comment."
+  user: User!
+}
+
+type CommentConnection {
+  edges: [CommentEdge!]!
+  nodes: [Comment!]!
+  pageInfo: PageInfo!
+}
+
+type CommentEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Comment!
+}
+
+type CommentPayload {
+  "The comment that was created or updated."
+  comment: Comment!
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"GitHub's commit data"
+type CommitPayload {
+  added: [String!]!
+  id: String!
+  message: String!
+  modified: [String!]!
+  removed: [String!]!
+  timestamp: String!
+  url: String!
+}
+
+type CreateCsvExportReportPayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type CreateOrJoinOrganizationResponse {
+  organization: Organization!
+  user: User!
+}
+
+"A set of issues to be resolved in a specified amount of time."
+type Cycle implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The completion time of the cycle. If null, the cycle hasn't been completed"
+  completedAt: DateTime
+  "The number of completed issues in the cycle after each day."
+  completedIssueCountHistory: [Float!]!
+  "The number of completed estimation points after each day."
+  completedScopeHistory: [Float!]!
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The end time of the cycle."
+  endsAt: DateTime!
+  "The unique identifier of the entity."
+  id: ID!
+  "The total number of issues in the cycle after each day."
+  issueCountHistory: [Float!]!
+  "Issues associated with the cycle."
+  issues(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueConnection!
+  "The custom name of the cycle."
+  name: String
+  "The number of the cycle."
+  number: Float!
+  "The total number of estimation points after each day."
+  scopeHistory: [Float!]!
+  "The start time of the cycle."
+  startsAt: DateTime!
+  "The team that the cycle is associated with."
+  team: Team!
+  "Issues that weren't completed when the cycle was closed."
+  uncompletedIssuesUponClose(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueConnection!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type CycleConnection {
+  edges: [CycleEdge!]!
+  nodes: [Cycle!]!
+  pageInfo: PageInfo!
+}
+
+type CycleEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Cycle!
+}
+
+type CyclePayload {
+  "The Cycle that was created or updated."
+  cycle: Cycle
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type DebugPayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"Collaborative editing steps for documents."
+type DocumentStep implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "Connected client ID."
+  clientId: String!
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The unique identifier of the entity."
+  id: ID!
+  "Step data."
+  step: JSON!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "Step version."
+  version: Float!
+}
+
+type EmailUnsubscribePayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type EmailUserAccountAuthChallengeResponse {
+  "Supported challenge for this user account. Can be either verificationCode or password."
+  authType: String!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"A custom emoji."
+type Emoji implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The user who created the emoji."
+  creator: User!
+  "The unique identifier of the entity."
+  id: ID!
+  "The emoji's name."
+  name: String!
+  "The organization that the emoji belongs to."
+  organization: Organization!
+  "The source of the emoji."
+  source: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "The emoji image URL."
+  url: String!
+}
+
+type EmojiConnection {
+  edges: [EmojiEdge!]!
+  nodes: [Emoji!]!
+  pageInfo: PageInfo!
+}
+
+type EmojiEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Emoji!
+}
+
+type EventPayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"User favorites presented in the sidebar."
+type Favorite implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "Favorited cycle."
+  cycle: Cycle
+  "The unique identifier of the entity."
+  id: ID!
+  "Favorited issue."
+  issue: Issue
+  "Favorited issue label."
+  label: IssueLabel
+  "Favorited project."
+  project: Project
+  "Favorited project team."
+  projectTeam: Project
+  "The type of the favorite."
+  type: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "The owner of the favorite."
+  user: User!
+}
+
+type FavoriteConnection {
+  edges: [FavoriteEdge!]!
+  nodes: [Favorite!]!
+  pageInfo: PageInfo!
+}
+
+type FavoriteEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Favorite!
+}
+
+type FavoritePayload {
+  "The object that was added as a favorite."
+  favorite: Favorite!
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type FeedbackPayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"Object representing Figma preview information."
+type FigmaEmbed {
+  "Date when the file was updated at the time of embedding."
+  lastModified: DateTime!
+  "Figma file name."
+  name: String!
+  "Node name."
+  nodeName: String
+  "Figma screenshot URL."
+  url: String
+}
+
+type FigmaEmbedPayload {
+  "Figma embed information."
+  figmaEmbed: FigmaEmbed
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"A recorded entry of a file uploaded by a user."
+type FileUpload {
+  "The asset URL this file is available at."
+  assetUrl: String
+  "The MIME type of the uploaded file."
+  contentType: String
+  "The user who uploaded the file."
+  creator: User
+  "The name of the uploaded file."
+  filename: String
+  "The unique identifier of the entity."
+  id: ID!
+  "Additional metadata of the file."
+  metaData: JSON!
+  "The organization the upload belongs to."
+  organization: Organization!
+  "Size of the uploaded file in bytes."
+  size: Float!
+}
+
+"Google Sheets specific settings."
+type GoogleSheetsSettings {
+  sheetId: Float!
+  spreadsheetId: String!
+  spreadsheetUrl: String!
+  updatedIssuesAt: DateTime!
+}
+
+type ImageUploadFromUrlPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+  "The URL containing the image."
+  url: String
+}
+
+"An integration with an external service."
+type Integration implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The user that added the integration."
+  creator: User!
+  "The unique identifier of the entity."
+  id: ID!
+  "The organization that the integration is associated with."
+  organization: Organization!
+  "The integration's type."
+  service: String!
+  "The external service identifier."
+  serviceId: String
+  "Settings related to the integration."
+  settings: IntegrationSettings!
+  "The team that the integration is associated with."
+  team: Team
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type IntegrationConnection {
+  edges: [IntegrationEdge!]!
+  nodes: [Integration!]!
+  pageInfo: PageInfo!
+}
+
+type IntegrationEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Integration!
+}
+
+type IntegrationPayload {
+  "The integration that was created or updated."
+  integration: Integration
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"An integration resource created by an external service."
+type IntegrationResource implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "Detailed information about the external resource."
+  data: IntegrationResourceData!
+  "The unique identifier of the entity."
+  id: ID!
+  "The integration that the resource is associated with."
+  integration: Integration!
+  "The issue that the resource is associated with."
+  issue: Issue!
+  "The external service resource ID."
+  resourceId: String!
+  "The integration's type."
+  resourceType: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type IntegrationResourceConnection {
+  edges: [IntegrationResourceEdge!]!
+  nodes: [IntegrationResource!]!
+  pageInfo: PageInfo!
+}
+
+"Integration resource's payload"
+type IntegrationResourceData {
+  githubCommit: CommitPayload
+  githubPullRequest: PullRequestPayload
+  gitlabMergeRequest: PullRequestPayload
+}
+
+type IntegrationResourceEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: IntegrationResource!
+}
+
+"The integration resource's settings"
+type IntegrationSettings {
+  googleSheets: GoogleSheetsSettings
+  slackPost: SlackPostSettings
+}
+
+type InviteData {
+  "Avatar URLs for the invitees."
+  avatarURLs: [String!]!
+  "The name of the inviter."
+  inviterName: String!
+  "The domain of the organization the users were invited to."
+  organizationDomain: String!
+  "The URL of the logo of the organization the users were invited to."
+  organizationLogoUrl: String
+  "The name of the organization the users were invited to."
+  organizationName: String!
+  "Team identifiers for the invitees."
+  teamIds: [String!]!
+  "Team names for the invitees."
+  teamNames: [String!]!
+  "The user count of the organization."
+  userCount: Float!
+}
+
+type InvitePagePayload {
+  "Invite data."
+  inviteData: InviteData
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"An issue."
+type Issue implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The user to whom the issue is assigned to."
+  assignee: User
+  "The order of the item in its column on the board."
+  boardOrder: Float!
+  "The time at which the issue was moved into canceled state."
+  canceledAt: DateTime
+  "Children of the issue."
+  children(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueConnection!
+  "Comments associated with the issue."
+  comments(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): CommentConnection!
+  "The time at which the issue was moved into completed state."
+  completedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The user who created the issue."
+  creator: User
+  "The cycle that the issue is associated with."
+  cycle: Cycle
+  "The issue's description in markdown format."
+  description: String
+  "The issue's description as a Prosemirror document."
+  descriptionData: JSON
+  "The estimate of the complexity of the issue.."
+  estimate: Float
+  "History entries associated with the issue."
+  history(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueHistoryConnection!
+  "The unique identifier of the entity."
+  id: ID!
+  "Integration resources for this issue."
+  integrationResources(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IntegrationResourceConnection!
+  "Inverse relations associated with this issue."
+  inverseRelations(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueRelationConnection!
+  "Labels associated with this issue."
+  labels(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueLabelConnection!
+  "The issue's unique number."
+  number: Float!
+  "The parent of the issue."
+  parent: Issue
+  "Previous identifiers of the issue if it has been moved between teams."
+  previousIdentifiers: [String!]!
+  "The priority of the issue."
+  priority: Float!
+  "The project that the issue is associated with."
+  project: Project
+  "Relations associated with this issue."
+  relations(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueRelationConnection!
+  "The time at which the issue was moved into started state."
+  startedAt: DateTime
+  "The workflow state that the issue is associated with."
+  state: WorkflowState!
+  "Users who are subscribed to the issue."
+  subscribers(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): UserConnection!
+  "The team that the issue is associated with."
+  team: Team!
+  "The issue's title."
+  title: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "Issue URL."
+  url: String!
+}
+
+type IssueConnection {
+  edges: [IssueEdge!]!
+  nodes: [Issue!]!
+  pageInfo: PageInfo!
+}
+
+type IssueEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Issue!
+}
+
+"A record of changes to an issue."
+type IssueHistory implements Node {
+  "The user who made these changes. If null, possibly means that the change made by an integration."
+  actor: User
+  "ID's of labels that were added."
+  addedLabelIds: [String!]
+  "Whether the issue was archived or un-archived."
+  archived: Boolean
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The user from whom the issue was re-assigned from."
+  fromAssignee: User
+  "The previous cycle of the issue."
+  fromCycle: Cycle
+  "What the estimate was changed from."
+  fromEstimate: Float
+  "The previous parent of the issue."
+  fromParent: Issue
+  "What the priority was changed from."
+  fromPriority: Float
+  "The previous project of the issue."
+  fromProject: Project
+  "The previous workflow state of the issue."
+  fromState: WorkflowState
+  "The team from which the issue was moved from."
+  fromTeam: Team
+  "What the title was changed from."
+  fromTitle: String
+  "The unique identifier of the entity."
+  id: ID!
+  "The integration that made these changes. If null, possibly means that the change was made by a user."
+  integration: Integration
+  "The issue that was changed."
+  issue: Issue!
+  "Changed issue relationships."
+  relationChanges: [String!]
+  "ID's of labels that were removed."
+  removedLabelIds: [String!]
+  "The user to whom the issue was assigned to."
+  toAssignee: User
+  "The new cycle of the issue."
+  toCycle: Cycle
+  "What the estimate was changed to."
+  toEstimate: Float
+  "The new parent of the issue."
+  toParent: Issue
+  "What the priority was changed to."
+  toPriority: Float
+  "The new project of the issue."
+  toProject: Project
+  "The new workflow state of the issue."
+  toState: WorkflowState
+  "The team to which the issue was moved to."
+  toTeam: Team
+  "What the title was changed to."
+  toTitle: String
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "Whether the issue's description was updated."
+  updatedDescription: Boolean
+}
+
+type IssueHistoryConnection {
+  edges: [IssueHistoryEdge!]!
+  nodes: [IssueHistory!]!
+  pageInfo: PageInfo!
+}
+
+type IssueHistoryEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: IssueHistory!
+}
+
+"Labels that can be associated with issues."
+type IssueLabel implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The label's color as a HEX string."
+  color: String!
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The user who created the label."
+  creator: User
+  "The label's description."
+  description: String
+  "The unique identifier of the entity."
+  id: ID!
+  "Issues associated with the label."
+  issues(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueConnection!
+  "The label's name."
+  name: String!
+  "The team to which the label belongs to."
+  team: Team!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type IssueLabelConnection {
+  edges: [IssueLabelEdge!]!
+  nodes: [IssueLabel!]!
+  pageInfo: PageInfo!
+}
+
+type IssueLabelEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: IssueLabel!
+}
+
+type IssueLabelPayload {
+  "The label that was created or updated."
+  issueLabel: IssueLabel!
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type IssuePayload {
+  "The issue that was created or updated."
+  issue: Issue
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"A relation between two issues."
+type IssueRelation implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The unique identifier of the entity."
+  id: ID!
+  "The issue whose relationship is being described."
+  issue: Issue!
+  "The related issue."
+  relatedIssue: Issue!
+  "The relationship of the issue with the related issue."
+  type: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type IssueRelationConnection {
+  edges: [IssueRelationEdge!]!
+  nodes: [IssueRelation!]!
+  pageInfo: PageInfo!
+}
+
+type IssueRelationEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: IssueRelation!
+}
+
+type IssueRelationPayload {
+  "The issue relation that was created or updated."
+  issueRelation: IssueRelation!
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type Mutation {
+  "Adds a domain to be allowed for an organization. Superuser privileges required."
+  adminOrganizationDomainCreate(
+    "The organization domain entry to create."
+    input: AdminOrganizationDomainCreateInput!
+  ): OrganizationDomainPayload!
+  "Archives an API key."
+  apiKeyArchive(
+    "The identifier of the API key to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new API key."
+  apiKeyCreate(
+    "The api key object to create."
+    input: ApiKeyCreateInput!
+  ): ApiKeyPayload!
+  "Update collaborative document with client steps."
+  collaborativeDocumentUpdate(input: CollaborationDocumentUpdateInput!): CollaborationDocumentUpdatePayload!
+  "Creates a new comment."
+  commentCreate(
+    "The comment object to create."
+    input: CommentCreateInput!
+  ): CommentPayload!
+  "Deletes a comment."
+  commentDelete(
+    "The identifier of the comment to delete."
+    id: String!
+  ): ArchivePayload!
+  "Updates a comment."
+  commentUpdate(
+    "The identifier of the comment to update."
+    id: String!,
+    "A partial comment object to update the issue with."
+    input: CommentUpdateInput!
+  ): CommentPayload!
+  "Create CSV export report for the organization."
+  createCsvExportReport: CreateCsvExportReportPayload!
+  "Creates an organization from onboarding."
+  createOrganizationFromOnboarding(
+    "Organization details for the new organization."
+    input: CreateOrganizationInput!
+  ): CreateOrJoinOrganizationResponse!
+  "Archives a cycle."
+  cycleArchive(
+    "The identifier of the cycle to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new cycle."
+  cycleCreate(
+    "The cycle object to create."
+    input: CycleCreateInput!
+  ): CyclePayload!
+  "Updates a cycle."
+  cycleUpdate(
+    "The identifier of the cycle to update."
+    id: String!,
+    "A partial cycle object to update the cycle with."
+    input: CycleUpdateInput!
+  ): CyclePayload!
+  "Always fails with internal error. Used to debug logging."
+  debugFailWithInternalError: DebugPayload!
+  "Authenticates a user account via email and authentication token."
+  emailTokenUserAccountAuth(
+    "The data used for email authentication."
+    input: EmailUserAccountAuthInput!
+  ): AuthResolverResponse!
+  "Unsubscribes the user from one type of emails."
+  emailUnsubscribe(
+    "Unsubscription details."
+    input: EmailUnsubscribeInput!
+  ): EmailUnsubscribePayload!
+  "Finds or creates a new user account by email and sends an email with token."
+  emailUserAccountAuthChallenge(
+    "The data used for email authentication."
+    input: EmailUserAccountAuthChallengeInput!
+  ): EmailUserAccountAuthChallengeResponse!
+  "Deletes an emoji."
+  emojiDelete(
+    "The identifier of the resource to delete."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new event."
+  eventCreate(
+    "The event to create."
+    input: EventCreateInput!
+  ): EventPayload!
+  "Archives a favorite reference."
+  favoriteArchive(
+    "The identifier of the favorite reference to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new favorite (project, cycle etc)."
+  favoriteCreate(
+    "The favorite object to create."
+    input: FavoriteCreateInput!
+  ): FavoritePayload!
+  "Saves user feedback."
+  feedbackCreate(
+    "The feedback entry to create."
+    input: FeedbackCreateInput!
+  ): FeedbackPayload!
+  "XHR request payload to upload an images, video and other attachments directly to Linear's cloud storage"
+  fileUpload(
+    "Upload mime-type."
+    contentType: String!,
+    "Filename of the uploaded file."
+    filename: String!,
+    "Optional metadata."
+    metaData: JSON,
+    "File size of the uploadable file."
+    size: Int!
+  ): UploadPayload!
+  "Authenticate user account through Google OAuth. This is the 2nd step of OAuth flow."
+  googleUserAccountAuth(
+    "The data used for Google authentication."
+    input: GoogleUserAccountAuthInput!
+  ): AuthResolverResponse!
+  "Upload an image from an URL to Linear."
+  imageUploadFromUrl(
+    "URL of the file to be uploaded to Linear."
+    url: String!
+  ): ImageUploadFromUrlPayload!
+  "Archives an integration."
+  integrationArchive(
+    "The identifier of the integration to archive."
+    id: String!
+  ): ArchivePayload!
+  "Integrates the organization with Figma."
+  integrationFigma(
+    "The Figma OAuth code."
+    code: String!,
+    "The Figma OAuth redirect URI."
+    redirectUri: String!
+  ): IntegrationPayload!
+  "Connects to organization with the GitHub App."
+  integrationGithubConnect(
+    "The GitHub data to connect with."
+    installationId: String!
+  ): IntegrationPayload!
+  "Connects to organization with a GitLab Access Token."
+  integrationGitlabConnect(
+    "The GitLab Access Token to connect with."
+    accessToken: String!,
+    "The URL of the GitLab installation"
+    gitlabUrl: String!
+  ): IntegrationPayload!
+  "Integrates the organization with Google Sheets."
+  integrationGoogleSheets(
+    "The Google OAuth code."
+    code: String!
+  ): IntegrationPayload!
+  "Archives an integration resource."
+  integrationResourceArchive(
+    "The identifier of the integration resource to archive."
+    id: String!
+  ): ArchivePayload!
+  "Integrates the organization with Slack."
+  integrationSlack(
+    "The Slack OAuth code."
+    code: String!,
+    "The Slack OAuth redirect URI."
+    redirectUri: String!
+  ): IntegrationPayload!
+  "Slack webhook integration."
+  integrationSlackPost(
+    "The Slack OAuth code."
+    code: String!,
+    "The Slack OAuth redirect URI."
+    redirectUri: String!,
+    "Integration's associated team."
+    teamId: String!
+  ): IntegrationPayload!
+  "Archives an issue."
+  issueArchive(
+    "The identifier of the issue to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new issue."
+  issueCreate(
+    "The issue object to create."
+    input: IssueCreateInput!
+  ): IssuePayload!
+  "Archives an issue label."
+  issueLabelArchive(
+    "The identifier of the label to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new label."
+  issueLabelCreate(
+    "The issue label to create."
+    input: IssueLabelCreateInput!
+  ): IssueLabelPayload!
+  "Updates an label."
+  issueLabelUpdate(
+    "The identifier of the label to update."
+    id: String!,
+    "A partial label object to update."
+    input: IssueLabelUpdateInput!
+  ): IssueLabelPayload!
+  "Archives a issue relation."
+  issueRelationArchive(
+    "The identifier of the issue relation to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new issue relation."
+  issueRelationCreate(
+    "The issue relation to create."
+    input: IssueRelationCreateInput!
+  ): IssueRelationPayload!
+  "Updates an issue relation."
+  issueRelationUpdate(
+    "The identifier of the issue relation to update."
+    id: String!,
+    "The properties of the issue relation to update."
+    input: IssueRelationUpdateInput!
+  ): IssueRelationPayload!
+  "Unarchives an issue."
+  issueUnarchive(
+    "The identifier of the issue to archive."
+    id: String!
+  ): ArchivePayload!
+  "Updates an issue."
+  issueUpdate(
+    "The identifier of the issue to update."
+    id: String!,
+    "A partial issue object to update the issue with."
+    input: IssueUpdateInput!
+  ): IssuePayload!
+  "Join an organization from onboarding."
+  joinOrganizationFromOnboarding(
+    "Organization details for the organization to join."
+    input: JoinOrganizationInput!
+  ): CreateOrJoinOrganizationResponse!
+  "Leave an organization."
+  leaveOrganization(
+    "ID of the organization to leave."
+    organizationId: String!
+  ): CreateOrJoinOrganizationResponse!
+  "Archives a notification."
+  notificationArchive(
+    "The identifier of the notification to archive."
+    id: String!
+  ): ArchivePayload!
+  "Archives a subscription reference."
+  notificationSubscriptionArchive(
+    "The identifier of the subscription reference to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new notification subscription for a team or a project."
+  notificationSubscriptionCreate(
+    "The subscription object to create."
+    input: NotificationSubscriptionCreateInput!
+  ): NotificationSubscriptionPayload!
+  "Updates a notification."
+  notificationUpdate(
+    "The identifier of the notification to update."
+    id: String!,
+    "A partial notification object to update the issue with."
+    input: NotificationUpdateInput!
+  ): NotificationPayload!
+  "Archives a domain."
+  organizationDomainArchive(
+    "The identifier of the domain to archive."
+    id: String!
+  ): ArchivePayload!
+  "Adds a domain to be allowed for an organization."
+  organizationDomainCreate(
+    "The organization domain entry to create."
+    input: OrganizationDomainCreateInput!
+  ): OrganizationDomainPayload!
+  "Verifies a domain to be added to an organization."
+  organizationDomainVerify(
+    "The organization domain to verify."
+    input: OrganizationDomainVerificationInput!
+  ): OrganizationDomainPayload!
+  "Creates a new organization invite."
+  organizationInviteCreate(
+    "The organization invite object to create."
+    input: OrganizationInviteCreateInput!
+  ): OrganizationInvitePayload!
+  "Deletes an organization invite."
+  organizationInviteDelete(
+    "The identifier of the organization invite to delete."
+    id: String!
+  ): ArchivePayload!
+  "Disable organization access. Superuser privileges required."
+  organizationToggleAccess(
+    "The identifier of the organization to update."
+    id: String!
+  ): OrganizationAccessPayload!
+  "Updates the user's organization."
+  organizationUpdate(
+    "A partial organization object to update the organization with."
+    input: UpdateOrganizationInput!
+  ): OrganizationPayload!
+  "Archives a project."
+  projectArchive(
+    "The identifier of the project to archive. Also the identifier from the URL is accepted."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new project."
+  projectCreate(
+    "The issue object to create."
+    input: ProjectCreateInput!
+  ): ProjectPayload!
+  "Archives a project link."
+  projectLinkArchive(
+    "The identifier of the project link to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new project link."
+  projectLinkCreate(
+    "The project link object to create."
+    input: ProjectLinkCreateInput!
+  ): ProjectLinkPayload!
+  "Updates a project."
+  projectUpdate(
+    "The identifier of the project to update. Also the identifier from the URL is accepted."
+    id: String!,
+    "A partial project object to update the project with."
+    input: ProjectUpdateInput!
+  ): ProjectPayload!
+  "Archives a PushSubscription."
+  pushSubscriptionArchive(
+    "The identifier of the PushSubscription to archive."
+    id: String!
+  ): PushSubscriptionPayload!
+  "Creates a push subscription."
+  pushSubscriptionCreate(
+    "The subscription to create."
+    input: PushSubscriptionCreateInput!
+  ): PushSubscriptionPayload!
+  "Creates a new reaction."
+  reactionCreate(
+    "The reaction object to create."
+    input: ReactionCreateInput!
+  ): ReactionPayload!
+  "Deletes a reaction."
+  reactionDelete(
+    "The identifier of the reaction to delete."
+    id: String!
+  ): ArchivePayload!
+  "Sends a referral to another user."
+  referralCreate(
+    "The data to create the referral with."
+    input: ReferralCreatePayload!
+  ): ReferralPayload!
+  "Re-send an organization invite."
+  resentOrganizationInvite(
+    "The identifier of the organization invite to be re-send."
+    id: String!
+  ): ArchivePayload!
+  "Subscribes user to changelog newsletter."
+  subscribeToNewsletter(
+    "The email information for the newsletter."
+    input: SubscribeToNewsletterInput!
+  ): SubscribeToNewsletterPayload!
+  "Archives a subscription."
+  subscriptionArchive(
+    "The identifier of the subscription to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a subscription session. Used internally to integrate with Stripe."
+  subscriptionSessionCreate(
+    "The name of the plan."
+    plan: String!
+  ): SubscriptionSessionPayload!
+  "Creates a subscription update session. Used internally to integrate with Stripe."
+  subscriptionUpdateSessionCreate: SubscriptionSessionPayload!
+  "Archives a team."
+  teamArchive(
+    "The identifier of the team to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new team. The user who creates the team will automatically be added as a member to the newly created team."
+  teamCreate(
+    "The team id to copy settings from."
+    copySettingsFromTeamId: String,
+    "The team object to create."
+    input: TeamCreateInput!
+  ): TeamPayload!
+  "Deletes a team."
+  teamDelete(
+    "The identifier of the team to delete."
+    id: String!
+  ): ArchivePayload!
+  "Archives a team membership."
+  teamMembershipArchive(
+    "The identifier of the team membership to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new team membership."
+  teamMembershipCreate(
+    "The team membership object to create."
+    input: TeamMembershipCreateInput!
+  ): TeamMembershipPayload!
+  "Updates a team."
+  teamUpdate(
+    "The identifier of the team to update."
+    id: String!,
+    "A partial team object to update the team with."
+    input: TeamUpdateInput!
+  ): TeamPayload!
+  "Archives a template."
+  templateArchive(
+    "The identifier of the template to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new template."
+  templateCreate(
+    "The template object to create."
+    input: TemplateCreateInput!
+  ): TemplatePayload!
+  "Updates an existing template."
+  templateUpdate(
+    "The identifier of the template."
+    id: String!,
+    "The properties of the template to update."
+    input: TemplateUpdateInput!
+  ): TemplatePayload!
+  "Makes user a regular user. Can only be called by an admin."
+  userDemoteAdmin(
+    "The identifier of the user to make a regular user."
+    id: String!
+  ): UserAdminPayload!
+  "Makes user an admin. Can only be called by an admin."
+  userPromoteAdmin(
+    "The identifier of the user to make an admin."
+    id: String!
+  ): UserAdminPayload!
+  "Updates user settings."
+  userSettingsFlagIncrement(
+    "Flag to increment."
+    flag: String!
+  ): UserSettingsFlagPayload!
+  "Resets user's setting flags."
+  userSettingsFlagsReset: UserSettingsFlagsResetPayload!
+  "Updates the users settings."
+  userSettingsUpdate(
+    "The identifier of the userSettings to update."
+    id: String!,
+    "A partial notification object to update the settings with."
+    input: UserSettingsUpdateInput!
+  ): UserSettingsPayload!
+  "Subscribes user to changelog newsletter."
+  userSubscribeToNewsletter: UserSubscribeToNewsletterPayload!
+  "Suspends a user. Can only be called by an admin."
+  userSuspend(
+    "The identifier of the user to suspend."
+    id: String!
+  ): UserAdminPayload!
+  "Unsuspends a user. Can only be called by an admin."
+  userUnsuspend(
+    "The identifier of the user to unsuspend."
+    id: String!
+  ): UserAdminPayload!
+  "Updates a user. Only available to organization admins and the user themselves."
+  userUpdate(
+    "The identifier of the user to update. Use `me` to reference currently authenticated user."
+    id: String!,
+    "A partial user object to update the user with."
+    input: UpdateUserInput!
+  ): UserPayload!
+  "Archives a ViewPreferences."
+  viewPreferencesArchive(
+    "The identifier of the ViewPreferences to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new ViewPreferences object."
+  viewPreferencesCreate(
+    "The ViewPreferences object to create."
+    input: ViewPreferencesCreateInput!
+  ): ViewPreferencesPayload!
+  "Updates an existing ViewPreferences object."
+  viewPreferencesUpdate(
+    "The identifier of the ViewPreferences object."
+    id: String!,
+    "The properties of the view preferences."
+    input: ViewPreferencesUpdateInput!
+  ): ViewPreferencesPayload!
+  "Creates a new wait-list entry."
+  waitListEntryCreate(
+    "The wait list entry to create."
+    input: WaitListEntryCreateInput!
+  ): WaitListEntryPayload!
+  "Invites a user from the waitlist."
+  waitListInvite(
+    "The users email address to invite."
+    email: String!
+  ): WaitListEntryPayload!
+  "Archives a Webhook."
+  webhookArchive(
+    "The identifier of the Webhook to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new Webhook."
+  webhookCreate(
+    "The Webhook object to create."
+    input: WebhookCreateInput!
+  ): WebhookPayload!
+  "Updates an existing Webhook."
+  webhookUpdate(
+    "The identifier of the Webhook."
+    id: String!,
+    "The properties of the Webhook."
+    input: WebhookUpdateInput!
+  ): WebhookPayload!
+  "Creates a new whitelist entry. Superuser privileges required."
+  whiteListEntryCreate(
+    "The whitelist entry to create."
+    input: WhiteListEntryCreateInput!
+  ): WhiteListEntryPayload!
+  "Sends an welcome email to a whitelisted user. Superuser privileges required."
+  whiteListWelcomeEmailer(
+    "The domain that was opened for access."
+    domain: String!,
+    "The email address of the sender."
+    senderEmail: String!,
+    "The name of the sender."
+    senderName: String!,
+    "The email address to send the invitation to."
+    toEmail: String!,
+    "The name of the user to send the invitation to."
+    toName: String!
+  ): WhiteListEntryPayload!
+  "Archives a state. Only states with issues that have all been archived can be archived."
+  workflowStateArchive(
+    "The identifier of the state to archive."
+    id: String!
+  ): ArchivePayload!
+  "Creates a new state, adding it to the workflow of a team."
+  workflowStateCreate(
+    "The state to create."
+    input: WorkflowStateCreateInput!
+  ): WorkflowStatePayload!
+  "Updates a state."
+  workflowStateUpdate(
+    "The identifier of the state to update."
+    id: String!,
+    "A partial state object to update."
+    input: WorkflowStateUpdateInput!
+  ): WorkflowStatePayload!
+}
+
+"A notification sent to a user."
+type Notification implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The comment which the notification is associated with."
+  comment: Comment
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  """
+
+  The time at when an email reminder for this notification was sent to the user. Null, if no email
+  reminder has been sent.
+  """
+  emailedAt: DateTime
+  "The unique identifier of the entity."
+  id: ID!
+  "The issue that the notification is associated with."
+  issue: Issue!
+  "Name of the reaction emoji associated with the notification."
+  reactionEmoji: String
+  "The time at when the user marked the notification as read. Null, if the the user hasn't read the notification"
+  readAt: DateTime
+  "The team which the notification is associated with."
+  team: Team!
+  "Notification type"
+  type: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "The recipient of the notification."
+  user: User!
+}
+
+type NotificationConnection {
+  edges: [NotificationEdge!]!
+  nodes: [Notification!]!
+  pageInfo: PageInfo!
+}
+
+type NotificationEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Notification!
+}
+
+type NotificationPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "The notification that was created or updated."
+  notification: Notification!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"Notification subscriptions for models."
+type NotificationSubscription implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The unique identifier of the entity."
+  id: ID!
+  "Subscribed project."
+  project: Project
+  "Subscribed team."
+  team: Team
+  "The type of the subscription."
+  type: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "The user associated with notification subscriptions."
+  user: User!
+}
+
+type NotificationSubscriptionConnection {
+  edges: [NotificationSubscriptionEdge!]!
+  nodes: [NotificationSubscription!]!
+  pageInfo: PageInfo!
+}
+
+type NotificationSubscriptionEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: NotificationSubscription!
+}
+
+type NotificationSubscriptionPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "The notification subscription that was created or updated."
+  notificationSubscription: NotificationSubscription!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"An organization. Organizations are root-level objects that contain user accounts and teams."
+type Organization implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "Number of issues in the organization."
+  createdIssueCount: Int!
+  "How git branches are formatted. If null, default formatting will be used."
+  gitBranchFormat: String!
+  "The unique identifier of the entity."
+  id: ID!
+  "Integrations associated with the organization."
+  integrations(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IntegrationConnection!
+  "The organization's logo URL."
+  logoUrl: String
+  "The organization's name."
+  name: String!
+  "Rolling 30-day total upload volume for the organization, in megabytes."
+  periodUploadVolume: Float!
+  "The organization's subscription to a paid plan."
+  subscription: Subscription
+  "Teams associated with the organization."
+  teams(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): TeamConnection!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  upgradeThresholdExceeded: Boolean!
+  "The organization's unique URL key."
+  urlKey: String!
+  "Number of active users in the organization."
+  userCount: Int!
+  "Users associated with the organization."
+  users(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): UserConnection!
+}
+
+type OrganizationAccessPayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"Defines the use of a domain by an organization."
+type OrganizationDomain implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The user who added the domain."
+  creator: User
+  "The unique identifier of the entity."
+  id: ID!
+  "Domain name"
+  name: String!
+  "Is this the primary domain"
+  primary: Boolean!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "E-mail used to verify this domain"
+  verificationEmail: String
+  "Is this domain verified"
+  verified: Boolean!
+}
+
+type OrganizationDomainPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "The organization domain that was created or updated."
+  organizationDomain: OrganizationDomain!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type OrganizationDomainSimplePayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type OrganizationExistsPayload {
+  "Whether the organization exists."
+  exists: Boolean!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"An invitation to the organization that has been sent via email."
+type OrganizationInvite implements Node {
+  "The time at which the invite was accepted. Null, if the invite hasn't been accepted"
+  acceptedAt: DateTime
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The invitees email address."
+  email: String!
+  "The time at which the invite will be expiring. Null, if the invite shouldn't expire"
+  expiresAt: DateTime
+  "The invite was sent to external address."
+  external: Boolean!
+  "The unique identifier of the entity."
+  id: ID!
+  "The user who has accepted the invite. Null, if the invite hasn't been accepted."
+  invitee: User
+  "The user who created the invitation."
+  inviter: User!
+  "The organization that the invite is associated with."
+  organization: Organization!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type OrganizationInviteConnection {
+  edges: [OrganizationInviteEdge!]!
+  nodes: [OrganizationInvite!]!
+  pageInfo: PageInfo!
+}
+
+type OrganizationInviteEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: OrganizationInvite!
+}
+
+type OrganizationInvitePayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "The organization invite that was created or updated."
+  organizationInvite: OrganizationInvite!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type OrganizationPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "The organization that was created or updated."
+  organization: Organization
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type PageInfo {
+  "Cursor representing the last result in the paginated results."
+  endCursor: String
+  "Indicates if there are more results when paginating forward."
+  hasNextPage: Boolean!
+  "Indicates if there are more results when paginating backward."
+  hasPreviousPage: Boolean!
+  "Cursor representing the first result in the paginated results."
+  startCursor: String
+}
+
+"A project."
+type Project implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the project was moved into canceled state."
+  canceledAt: DateTime
+  "The project's color."
+  color: String!
+  "The time at which the project was moved into completed state."
+  completedAt: DateTime
+  "The number of completed issues in the project after each week."
+  completedIssueCountHistory: [Float!]!
+  "The number of completed estimation points after each week."
+  completedScopeHistory: [Float!]!
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The user who created the project."
+  creator: User!
+  "The project's description."
+  description: String!
+  "The unique identifier of the entity."
+  id: ID!
+  "The total number of issues in the project after each week."
+  issueCountHistory: [Float!]!
+  "Issues associated with the project."
+  issues(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueConnection!
+  "Links associated with the project."
+  links(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): ProjectLinkConnection!
+  "The project's name."
+  name: String!
+  "The total number of estimation points after each week."
+  scopeHistory: [Float!]!
+  "The project's unique URL slug."
+  slugId: String!
+  "The time at which the project was moved into started state."
+  startedAt: DateTime
+  "The type of the state."
+  state: String!
+  "The estimated completion date of the project."
+  targetDate: DateTime
+  "Teams associated with this project."
+  teams(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): TeamConnection!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type ProjectConnection {
+  edges: [ProjectEdge!]!
+  nodes: [Project!]!
+  pageInfo: PageInfo!
+}
+
+type ProjectEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Project!
+}
+
+"An external link for a project."
+type ProjectLink implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The user who created the link."
+  creator: User!
+  "The unique identifier of the entity."
+  id: ID!
+  "The link's label."
+  label: String!
+  "The project that the link is associated with."
+  project: Project!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "The link's URL."
+  url: String!
+}
+
+type ProjectLinkConnection {
+  edges: [ProjectLinkEdge!]!
+  nodes: [ProjectLink!]!
+  pageInfo: PageInfo!
+}
+
+type ProjectLinkEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: ProjectLink!
+}
+
+type ProjectLinkPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "The project that was created or updated."
+  projectLink: ProjectLink!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type ProjectPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "The project that was created or updated."
+  project: Project
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"Pull request data"
+type PullRequestPayload {
+  closedAt: String!
+  createdAt: String!
+  draft: Boolean!
+  id: String!
+  mergedAt: String!
+  number: Float!
+  repoLogin: String!
+  repoName: String!
+  status: String!
+  title: String!
+  updatedAt: String!
+  url: String!
+  userId: String!
+  userLogin: String!
+}
+
+"A user's web browser push notification subscription."
+type PushSubscription implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The unique identifier of the entity."
+  id: ID!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type PushSubscriptionConnection {
+  edges: [PushSubscriptionEdge!]!
+  nodes: [PushSubscription!]!
+  pageInfo: PageInfo!
+}
+
+type PushSubscriptionEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: PushSubscription!
+}
+
+type PushSubscriptionPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type Query {
+  "All links for the project."
+  ProjectLinks(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): ProjectLinkConnection!
+  "Finds a user account by email or identifier. Super user required."
+  adminUserAccountLookup(
+    "Email by which to search for the user account."
+    email: String,
+    "The identifier by which to search for the user account."
+    id: String
+  ): UserAccount!
+  "All API keys for the user."
+  apiKeys(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): ApiKeyConnection!
+  "Fetches an archived model."
+  archivedModelSync(
+    "The identifier of the model to load. What an identifier is specific to the model class."
+    identifier: String!,
+    "The class name of the model to load."
+    modelClass: String!
+  ): ArchiveResponse!
+  "Fetches archived models."
+  archivedModelsSync(
+    "Retrieve issues that have been archived before this date."
+    before: DateTime,
+    "The number of issues to load."
+    last: Int,
+    "The class name of the models to load."
+    modelClass: String!,
+    "The teamId for which to load archived models."
+    teamId: String!
+  ): ArchiveResponse!
+  "Fetch users belonging to this user account."
+  availableUsers: AuthResolverResponse!
+  "Join collaborative document and get missing steps."
+  collaborativeDocumentJoin(
+    "The identifier of the client."
+    clientId: String!,
+    "The identifier of the Issue to join."
+    issueId: String!,
+    "Document version."
+    version: Int!
+  ): CollaborationDocumentUpdatePayload!
+  "A specific comment."
+  comment(
+    "The identifier to retrieve."
+    id: String!
+  ): Comment!
+  comments(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): CommentConnection!
+  "One specific cycle."
+  cycle(id: String!): Cycle!
+  "All cycles."
+  cycles(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): CycleConnection!
+  "A specific emoji."
+  emoji(
+    "The identifier to retrieve."
+    id: String!
+  ): Emoji!
+  emojis(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): EmojiConnection!
+  "One specific issue relation."
+  favorite(id: String!): IssueRelation!
+  "The user's favorites."
+  favorites(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): FavoriteConnection!
+  "Fetch Figma screenshot and other information with file and node identifiers."
+  figmaEmbedInfo(
+    "Figma file identifier."
+    fileId: String!,
+    "Figma node identifier."
+    nodeId: String
+  ): FigmaEmbedPayload!
+  "One specific integration."
+  integration(id: String!): Integration!
+  "One specific integration resource (e.g. linked GitHub pull requests for an issue)."
+  integrationResource(id: String!): IntegrationResource!
+  "All integrations resources (e.g. linked GitHub pull requests for issues)."
+  integrationResources(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IntegrationResourceConnection!
+  "All integrations."
+  integrations(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IntegrationConnection!
+  "Retrieves information for the public invite page."
+  inviteInfo(
+    "Team hash."
+    teamHash: String,
+    "User hash."
+    userHash: String!
+  ): InvitePagePayload!
+  "One specific issue."
+  issue(id: String!): Issue!
+  "One specific label."
+  issueLabel(id: String!): IssueLabel!
+  "All labels."
+  issueLabels(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueLabelConnection!
+  issueRelations(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueRelationConnection!
+  issues(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueConnection!
+  "The users settings."
+  notification: UserSettings!
+  "The user's notification subscriptions."
+  notificationSubscription(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): NotificationSubscriptionConnection!
+  "All notifications."
+  notifications(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): NotificationConnection!
+  "The user's organization."
+  organization: Organization!
+  "Does the organization exist."
+  organizationExists(urlKey: String!): OrganizationExistsPayload!
+  "One specific organization invite."
+  organizationInvite(id: String!): IssueLabel!
+  "All invites for the organization."
+  organizationInvites(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): OrganizationInviteConnection!
+  "One specific project."
+  project(id: String!): Project!
+  "One specific project link."
+  projectLink(id: String!): ProjectLink!
+  "All projects."
+  projects(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): ProjectConnection!
+  "Sends a test push message."
+  pushSubscriptionTest: PushSubscriptionPayload!
+  "A specific reaction."
+  reaction(
+    "The identifier to retrieve."
+    id: String!
+  ): Reaction!
+  reactions(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): ReactionConnection!
+  "The organization's subscription."
+  subscription: Subscription!
+  "Fetch data to catch up the client to the state of the world."
+  syncBootstrap(
+    "The version of the backend database the client has locally stored."
+    databaseVersion: Int!,
+    "Whether to use the new query mechanism."
+    newMechanism: Boolean,
+    "The last sync id the client has seen."
+    sinceSyncId: Int!
+  ): SyncResponse!
+  "Fetches delta packets to catch up the user to the current state of the world."
+  syncUpdates(
+    "The last sync id the client has seen."
+    sinceSyncId: Float!
+  ): SyncResponse!
+  "One specific team."
+  team(id: String!): Team!
+  "One specific team membership."
+  teamMembership(id: String!): TeamMembership!
+  "All team memberships."
+  teamMemberships(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): TeamMembershipConnection!
+  "All teams."
+  teams(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): TeamConnection!
+  "A specific template."
+  template(
+    "The identifier to retrieve."
+    id: String!
+  ): Template!
+  "All templates from all users."
+  templates: [Template!]!
+  "One specific user."
+  user(
+    "The identifier of the user to retrieve. To retrieve the authenticated user, use `viewer` query."
+    id: String!
+  ): User!
+  "All users of the organization."
+  users(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): UserConnection!
+  "All view preferences."
+  viewPreferences(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): ViewPreferencesConnection!
+  "The currently authenticated user."
+  viewer: User!
+  "A specific Webhook."
+  webhook(
+    "The identifier to retrieve."
+    id: String!
+  ): Webhook!
+  "All Webhooks."
+  webhooks(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): WebhookConnection!
+  "One specific state."
+  workflowState(id: String!): WorkflowState!
+  "All states."
+  workflowStates(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): WorkflowStateConnection!
+}
+
+"A reaction associated with a comment."
+type Reaction implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The comment that the reaction is associated with."
+  comment: Comment!
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "Name of the reaction's emoji."
+  emoji: String!
+  "The unique identifier of the entity."
+  id: ID!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "The user who reacted."
+  user: User!
+}
+
+type ReactionConnection {
+  edges: [ReactionEdge!]!
+  nodes: [Reaction!]!
+  pageInfo: PageInfo!
+}
+
+type ReactionEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Reaction!
+}
+
+type ReactionPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  reaction: Reaction!
+  success: Boolean!
+}
+
+type ReferralPayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"Slack notification specific settings."
+type SlackPostSettings {
+  channel: String!
+  channelId: String!
+  configurationUrl: String!
+}
+
+type StepsResponse {
+  "List of client IDs for the document steps."
+  clientIds: [String!]!
+  "New document steps from the client."
+  steps: [JSON!]
+  "Client's document version."
+  version: Int!
+}
+
+type SubscribeToNewsletterPayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"The subscription of an organization."
+type Subscription implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The creator of the subscription."
+  creator: User
+  "The unique identifier of the entity."
+  id: ID!
+  "The organization that the user is associated with."
+  organization: Organization!
+  "The number of seats in the subscription."
+  seats: Float!
+  "The Stripe identifier for the subscription."
+  stripeSubscriptionId: String!
+  "The subscription type."
+  type: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type SubscriptionSessionPayload {
+  "The subscription session that was created or updated."
+  session: String
+}
+
+"""
+
+Contains either the full serialized state of the application or delta packets that the requester can
+apply to the local data set in order to be up-to-date.
+"""
+type SyncResponse {
+  "A JSON serialized collection of model objects loaded from the archive"
+  archive: String
+  "The version of the remote database. Incremented by 1 for each migration run on the database."
+  databaseVersion: Float!
+  """
+
+  JSON serialized delta changes that the client can apply to its local state
+  in order to catch up with the state of the world.
+  """
+  delta: String
+  "The last sync id covered by the response."
+  lastSyncId: Float!
+  """
+
+  The full state of the organization as a serialized JSON object.
+  Mutually exclusive with the delta property
+  """
+  state: String
+}
+
+type SynchronizedPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+}
+
+"An organizational unit that contains issues."
+type Team implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "Calender feed (iCal) for cycles."
+  cycleCalenderUrl: String!
+  "The cooldown time after each cycle in weeks."
+  cycleCooldownTime: Float!
+  "The duration of a cycle in weeks."
+  cycleDuration: Float!
+  "Auto assign completed issues to current cycle."
+  cycleIssueAutoAssignCompleted: Boolean!
+  "Auto assign started issues to current cycle."
+  cycleIssueAutoAssignStarted: Boolean!
+  "Only allow issues issues with cycles in Active Issues."
+  cycleLockToActive: Boolean!
+  "The day of the week that a new cycle starts."
+  cycleStartDay: Float!
+  "Cycles associated with the team."
+  cycles(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): CycleConnection!
+  "Whether the team uses cycles."
+  cyclesEnabled: Boolean!
+  "What to use as an default estimate for unestimated issues."
+  defaultIssueEstimate: Float!
+  "The default template to use for new issues created by members of the team."
+  defaultTemplateForMembersId: String!
+  "The default template to use for new issues created by non-members of the team."
+  defaultTemplateForNonMembersId: String!
+  "The team's description."
+  description: String
+  "The workflow state into which issues are moved when a PR has been opened as draft."
+  draftWorkflowState: WorkflowState
+  "Whether to group recent issue history entries."
+  groupIssueHistory: Boolean!
+  "The unique identifier of the entity."
+  id: ID!
+  "Unique hash for the team to be used in invite URLs."
+  inviteHash: String!
+  "Whether to allow zeros in issues estimates."
+  issueEstimationAllowZero: Boolean!
+  "Whether to add additional points to the estimate scale."
+  issueEstimationExtended: Boolean!
+  "The issue estimation type to use."
+  issueEstimationType: String!
+  "Issues associated with the team."
+  issues(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueConnection!
+  "The team's unique key. The key is used in URLs."
+  key: String!
+  "Labels associated with the team."
+  labels(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueLabelConnection!
+  "Memberships associated with the team."
+  memberships(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): TeamMembershipConnection!
+  "The workflow state into which issues are moved when a PR has been merged."
+  mergeWorkflowState: WorkflowState
+  "The team's name."
+  name: String!
+  "The organization that the team is associated with."
+  organization: Organization!
+  "Projects associated with the team."
+  projects(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): ProjectConnection!
+  "The workflow state into which issues are moved when a review has been requested for the PR."
+  reviewWorkflowState: WorkflowState
+  "Whether to send new issue comment notifications to Slack."
+  slackIssueComments: Boolean!
+  "Whether to send new issue status updates to Slack."
+  slackIssueStatuses: Boolean!
+  "Whether to send new issue notifications to Slack."
+  slackNewIssue: Boolean!
+  "The workflow state into which issues are moved when a PR has been opened."
+  startWorkflowState: WorkflowState
+  "The states that define the workflow associated with the team."
+  states(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): WorkflowStateConnection!
+  "Templates associated with the team."
+  templates(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): TemplateConnection!
+  "The timezone of the team. Defaults to \"America/Los_Angeles\""
+  timezone: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "Webhooks associated with the team."
+  webhooks(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): WebhookConnection!
+}
+
+type TeamConnection {
+  edges: [TeamEdge!]!
+  nodes: [Team!]!
+  pageInfo: PageInfo!
+}
+
+type TeamEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Team!
+}
+
+"Defines the membership of a user to a team."
+type TeamMembership implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The unique identifier of the entity."
+  id: ID!
+  "The team that the membership is associated with."
+  team: Team!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "The user that the membership is associated with."
+  user: User!
+}
+
+type TeamMembershipConnection {
+  edges: [TeamMembershipEdge!]!
+  nodes: [TeamMembership!]!
+  pageInfo: PageInfo!
+}
+
+type TeamMembershipEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: TeamMembership!
+}
+
+type TeamMembershipPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+  "The team membership that was created or updated."
+  teamMembership: TeamMembership
+}
+
+type TeamPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+  "The team that was created or updated."
+  team: Team
+}
+
+"A template object used for creating new issues faster."
+type Template implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The user who created the template."
+  creator: User
+  "Template description."
+  description: String
+  "The unique identifier of the entity."
+  id: ID!
+  "The name of the template."
+  name: String!
+  "The team that the template is associated with."
+  team: Team!
+  "Template data."
+  templateData: JSON!
+  "The entity type this template is for."
+  type: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type TemplateConnection {
+  edges: [TemplateEdge!]!
+  nodes: [Template!]!
+  pageInfo: PageInfo!
+}
+
+type TemplateEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Template!
+}
+
+type TemplatePayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+  "The template that was created or updated."
+  template: Template!
+}
+
+"Object representing Google Cloud upload policy, plus additional data."
+type UploadFile {
+  "The asset URL for the uploaded file (assigned automatically.)"
+  assetUrl: String!
+  "The content type."
+  contentType: String!
+  "The filename."
+  filename: String!
+  headers: [UploadFileHeader!]!
+  metaData: JSON
+  "The size of the uploaded file."
+  size: Int!
+  "The signed URL the for the uploaded file (assigned automatically.)"
+  uploadUrl: String!
+}
+
+type UploadFileHeader {
+  "Upload file header key."
+  key: String!
+  "Upload file header value."
+  value: String!
+}
+
+type UploadPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+  "Object describing the file to be uploaded."
+  uploadFile: UploadFile
+}
+
+"A user that has access to the the resources of an organization."
+type User implements Node {
+  "Whether the user account is active or disabled."
+  active: Boolean!
+  "Whether the user is an organization administrator."
+  admin: Boolean!
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "Issues assigned to the user."
+  assignedIssues(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueConnection!
+  "An URL to the user's avatar image."
+  avatarUrl: String
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "Number of issues created."
+  createdIssueCount: Int!
+  "Issues created by the user."
+  createdIssues(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueConnection!
+  "Reason why is the account disabled."
+  disableReason: String!
+  "The user's display (nick) name. Unique within each organization."
+  displayName: String!
+  "The user's email address."
+  email: String!
+  "The unique identifier of the entity."
+  id: ID!
+  "Unique hash for the user to be used in invite URLs."
+  inviteHash: String!
+  "The last time the user was seen online. If null, the user is currently online."
+  lastSeen: DateTime
+  "The user's full name."
+  name: String!
+  "Organization in which the user belongs to."
+  organization: Organization!
+  "The settings of the user."
+  settings: UserSettings!
+  "Memberships associated with the user."
+  teamMemberships(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): TeamMembershipConnection!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  userAccountId: String!
+}
+
+"A user account."
+type UserAccount {
+  "The time at which the model was archived."
+  archivedAt: DateTime
+  "The time at which the model was created."
+  createdAt: DateTime!
+  "The user's email address."
+  email: String!
+  "The models identifier."
+  id: ID!
+  "The user's name."
+  name: String
+  "The authentication service used to create the account."
+  service: String!
+  "The time at which the model was updated."
+  updatedAt: DateTime!
+  "Users belonging to the account."
+  users: [User!]!
+}
+
+type UserAdminPayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  nodes: [User!]!
+  pageInfo: PageInfo!
+}
+
+type UserEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: User!
+}
+
+type UserPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+  "The user that was created or updated."
+  user: User
+}
+
+"The settings of a user as a JSON object."
+type UserSettings implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The unique identifier of the entity."
+  id: ID!
+  "The email types the user has unsubscribed from."
+  unsubscribedFrom: [String!]!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "The user to whom this notification was targeted for."
+  user: User!
+}
+
+type UserSettingsFlagPayload {
+  "The flag key which was updated."
+  flag: String!
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+  "The flag value after update."
+  value: Int!
+}
+
+type UserSettingsFlagsResetPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+type UserSettingsPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+  "The user's settings."
+  userSettings: UserSettings!
+}
+
+type UserSubscribeToNewsletterPayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"View preferences."
+type ViewPreferences implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The unique identifier of the entity."
+  id: ID!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "The view type."
+  viewType: String!
+}
+
+type ViewPreferencesConnection {
+  edges: [ViewPreferencesEdge!]!
+  nodes: [ViewPreferences!]!
+  pageInfo: PageInfo!
+}
+
+type ViewPreferencesEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: ViewPreferences!
+}
+
+type ViewPreferencesPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+  "The view preferences entity being mutated."
+  viewPreferences: ViewPreferences!
+}
+
+type WaitListEntryPayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"A webhook used to send HTTP notifications over data updates"
+type Webhook implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "The user who created the webhook."
+  creator: User
+  "Whether the Webhook is enabled."
+  enabled: Boolean!
+  "The unique identifier of the entity."
+  id: ID!
+  "Secret token for verifying the origin on the recipient side."
+  secret: String
+  "The team that the webhook is associated with."
+  team: Team!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+  "Webhook URL"
+  url: String!
+}
+
+type WebhookConnection {
+  edges: [WebhookEdge!]!
+  nodes: [Webhook!]!
+  pageInfo: PageInfo!
+}
+
+type WebhookEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: Webhook!
+}
+
+type WebhookPayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+  "The Webhook entity being mutated."
+  webhook: Webhook!
+}
+
+type WhiteListEntryPayload {
+  "Whether the operation was successful."
+  success: Boolean!
+}
+
+"A state in a team workflow."
+type WorkflowState implements Node {
+  "The time at which the entity was archived. Null if the entity has not been archived."
+  archivedAt: DateTime
+  "The state's UI color as a HEX string."
+  color: String!
+  "The time at which the entity was created."
+  createdAt: DateTime!
+  "Description of the state."
+  description: String
+  "The unique identifier of the entity."
+  id: ID!
+  "Issues belonging in this state."
+  issues(
+    "A cursor to be used with first for forward pagination"
+    after: String,
+    "A cursor to be used with last for backward pagination."
+    before: String,
+    "The number of items to forward paginate (used with after). Defaults to 50."
+    first: Int,
+    "Should archived resources be included (default: false)"
+    includeArchived: Boolean,
+    "The number of items to backward paginate (used with before). Defaults to 50."
+    last: Int
+  ): IssueConnection!
+  "The state's name."
+  name: String!
+  "The position of the state in the team flow."
+  position: Float!
+  "The team to which this state belongs to."
+  team: Team!
+  "The type of the state."
+  type: String!
+  """
+
+  The last time at which the entity was updated. This is the same as the creation time if the
+  entity hasn't been update after creation.
+  """
+  updatedAt: DateTime!
+}
+
+type WorkflowStateConnection {
+  edges: [WorkflowStateEdge!]!
+  nodes: [WorkflowState!]!
+  pageInfo: PageInfo!
+}
+
+type WorkflowStateEdge {
+  "Used in `before` and `after` args"
+  cursor: String!
+  node: WorkflowState!
+}
+
+type WorkflowStatePayload {
+  "The identifier of the last sync operation."
+  lastSyncId: Float!
+  "Whether the operation was successful."
+  success: Boolean!
+  "The state that was created or updated."
+  workflowState: WorkflowState!
+}
+
+"The type of the issue relation."
+enum IssueRelationType {
+  blocks
+  duplicate
+  related
+}
+
+"The client view this custom view is targeting."
+enum ViewType {
+  board
+  cycle
+  label
+  project
+}
+
+input AdminOrganizationDomainCreateInput {
+  "The domain name to add."
+  name: String!
+  "The identifier of the organization for which to add the domain."
+  organizationId: String!
+}
+
+input ApiKeyCreateInput {
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The API key value (format: /^[a-zA-Z0-9]{40}$/)."
+  key: String!
+  "The label for the API key."
+  label: String!
+}
+
+input CollaborationDocumentUpdateInput {
+  "Client identifier."
+  clientId: String!
+  "Document identifier."
+  issueId: String
+  "New document steps from the client."
+  steps: [JSON!]!
+  "Client's document version number."
+  version: Int!
+}
+
+input CommentCreateInput {
+  "The comment content in markdown format."
+  body: String
+  "The comment content as a Prosemirror document."
+  bodyData: JSON
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The issue to associate the comment with."
+  issueId: String!
+}
+
+input CommentUpdateInput {
+  "The comment content."
+  body: String
+  "The comment content as a Prosemirror document."
+  bodyData: JSON
+}
+
+input CreateOrganizationInput {
+  "Whether the organization should allow email domain access."
+  domainAccess: Boolean
+  "The name of the organization."
+  name: String!
+  "The timezone of the organization, passed in by client."
+  timezone: String
+  "The URL key of the organization."
+  urlKey: String!
+}
+
+input CycleCreateInput {
+  "The end date of the cycle."
+  completedAt: DateTime
+  "The end date of the cycle."
+  endsAt: DateTime!
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The custom name of the cycle."
+  name: String
+  "The start date of the cycle."
+  startsAt: DateTime!
+  "The team to associate the cycle with."
+  teamId: String!
+}
+
+input CycleUpdateInput {
+  "The end date of the cycle."
+  completedAt: DateTime
+  "The end date of the cycle."
+  endsAt: DateTime
+  "The custom name of the cycle."
+  name: String
+  "The start date of the cycle."
+  startsAt: DateTime
+}
+
+input EmailUnsubscribeInput {
+  "The user's email validation token."
+  token: String!
+  "Email type to unsubscribed from."
+  type: String!
+  "The identifier of the user."
+  userId: String!
+}
+
+input EmailUserAccountAuthChallengeInput {
+  "The email for which to generate the magic login code."
+  email: String!
+  "Whether the login was requested from the desktop app."
+  isDesktop: Boolean
+  "Signup code."
+  signupCode: String
+}
+
+input EmailUserAccountAuthInput {
+  "The email which to login via the magic login code."
+  email: String!
+  "The identifiers of the teams to auto-join."
+  teamIdsToJoin: [String!]
+  "The timezone of the user's browser."
+  timezone: String!
+  "The magic login code."
+  token: String!
+}
+
+input EventCreateInput {
+  "The category of the event to create."
+  category: String!
+  "Additional data of the event, encoded as JSON."
+  data: JSON
+  "The subject of the event."
+  subject: String!
+  "The target identifier of the event."
+  targetId: String
+  "The value of the event."
+  value: Float
+}
+
+input FavoriteCreateInput {
+  "The identifier of the cycle to favorite."
+  cycleId: String
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The identifier of the issue to favorite."
+  issueId: String
+  "The identifier of the label to favorite."
+  labelId: String
+  "The identifier of the project to favorite."
+  projectId: String
+  "The identifier of the project team to favorite."
+  projectTeamId: String
+}
+
+input FeedbackCreateInput {
+  "How disappointed the user would be if he/she could no longer use Linear."
+  disappointmentRating: Float!
+  "The feedback the user sent."
+  feedback: String!
+}
+
+input GoogleUserAccountAuthInput {
+  "Code returned from Google's OAuth flow."
+  code: String!
+  "The URI to redirect the user to."
+  redirectUri: String
+  "Signup code."
+  signupCode: String
+  "The identifiers of the teams to auto-join."
+  teamIdsToJoin: [String!]
+  "The timezone of the user's browser."
+  timezone: String!
+}
+
+input IssueCreateInput {
+  "The identifier of the user to assign the issue to."
+  assigneeId: String
+  "The position of the item in its column on the kanban board."
+  boardOrder: Float
+  "The cycle associated with the issue."
+  cycleId: String
+  "The issue description in markdown format."
+  description: String
+  "The issue description as a Prosemirror document."
+  descriptionData: JSON
+  "The estimated complexity of the issue."
+  estimate: Int
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The ids of the issue labels associated with this ticket."
+  labelIds: [String!]
+  "The identifier of the parent issue."
+  parentId: String
+  "The priority of the issue."
+  priority: Int
+  "The project associated with the issue."
+  projectId: String
+  "The team state of the issue."
+  stateId: String
+  "The ids of the users subscribing to this ticket."
+  subscriberIds: [String!]
+  "The identifier or key of the team associated with the issue."
+  teamId: String!
+  "The title of the issue."
+  title: String!
+}
+
+input IssueLabelCreateInput {
+  "The color of the label."
+  color: String
+  "The description of the label."
+  description: String
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The name of the label."
+  name: String!
+  "The team associated with the label."
+  teamId: String!
+}
+
+input IssueLabelUpdateInput {
+  "The color of the label."
+  color: String
+  "The description of the label."
+  description: String
+  "The name of the label name."
+  name: String
+}
+
+input IssueRelationCreateInput {
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The identifier of the issue that is related to another issue."
+  issueId: String!
+  "The identifier of the related issue."
+  relatedIssueId: String!
+  "The type of relation of the issue to the related issue."
+  type: IssueRelationType!
+}
+
+input IssueRelationUpdateInput {
+  "The identifier of the issue that is related to another issue."
+  issueId: String
+  "The identifier of the related issue."
+  relatedIssueId: String
+  "The type of relation of the issue to the related issue."
+  type: String
+}
+
+input IssueUpdateInput {
+  "The identifier of the user to assign the issue to."
+  assigneeId: String
+  "The position of the item in its column on the board."
+  boardOrder: Float
+  "The cycle associated with the issue."
+  cycleId: String
+  "The issue description in markdown format."
+  description: String
+  "The issue description as a Prosemirror document."
+  descriptionData: JSON
+  "[DEPRECATED] Document version for backwards compatibility."
+  documentVersion: Int
+  "The estimated complexity of the issue."
+  estimate: Int
+  "The ids of the issue labels associated with this ticket."
+  labelIds: [String!]
+  "The identifier of the parent issue."
+  parentId: String
+  "The priority of the issue."
+  priority: Int
+  "The project associated with the issue."
+  projectId: String
+  "The team state of the issue."
+  stateId: String
+  "The ids of the users subscribing to this ticket."
+  subscriberIds: [String!]
+  "The identifier or key of the team associated with the issue."
+  teamId: String
+  "The issue title."
+  title: String
+}
+
+input JoinOrganizationInput {
+  "The identifier of the organization."
+  organizationId: String!
+}
+
+input NotificationSubscriptionCreateInput {
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The identifier of the project to subscribe to."
+  projectId: String
+  "The identifier of the team to subscribe to."
+  teamId: String
+}
+
+input NotificationUpdateInput {
+  "The time when notification was marked as read."
+  readAt: DateTime
+}
+
+input OrganizationDomainCreateInput {
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The domain name to add."
+  name: String!
+  "Is the domain the primary domain for the organization."
+  primary: Boolean!
+  "The e-mail address to which to send the verification code."
+  verificationEmail: String!
+  "Is the domain verified."
+  verified: Boolean!
+}
+
+input OrganizationDomainVerificationInput {
+  "The identifier of the domain which we're verifying."
+  organizationDomainId: String!
+  "The verification code sent via e-mail."
+  verificationCode: String!
+}
+
+input OrganizationInviteCreateInput {
+  "The email of the invitee."
+  email: String!
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The message to send to the invitee."
+  message: String
+  "The teams that the user has been invited to."
+  teamIds: [String!]
+}
+
+input ProjectCreateInput {
+  "The color of the project."
+  color: String
+  "The description for the project."
+  description: String
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The name of the project."
+  name: String!
+  "The state of the project."
+  state: String
+  "The planned target date of the project."
+  targetDate: DateTime
+  "The ids of the teams this project is associated with."
+  teamIds: [String!]!
+}
+
+input ProjectLinkCreateInput {
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The label for the link."
+  label: String!
+  "Related project for the link."
+  projectId: String!
+  "The URL of the link."
+  url: String!
+}
+
+input ProjectUpdateInput {
+  "The color of the project."
+  color: String
+  "The description for the project."
+  description: String
+  "The name of the project."
+  name: String
+  "The state of the project."
+  state: String
+  "The planned target date of the project."
+  targetDate: DateTime
+  "The ids of the teams this project is associated with."
+  teamIds: [String!]
+}
+
+input PushSubscriptionCreateInput {
+  "The data of the subscription in stringified JSON format."
+  data: String!
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The user identifier of the subscription."
+  userId: String!
+}
+
+input ReactionCreateInput {
+  "The comment to associate the reaction with."
+  commentId: String!
+  "Name of the emoji user reacted with."
+  emoji: String
+  "The identifier. If none is provided, the backend will generate one"
+  id: String
+}
+
+input ReferralCreatePayload {
+  "The users email address of the person you're referring."
+  email: String!
+}
+
+input SubscribeToNewsletterInput {
+  "The user's email address which will be subscribed to changelog newsletter."
+  email: String!
+}
+
+input TeamCreateInput {
+  "The cooldown time after each cycle in weeks."
+  cycleCooldownTime: Int
+  "The duration of each cycle in weeks."
+  cycleDuration: Int
+  "Auto assign completed issues to current active cycle setting."
+  cycleIssueAutoAssignCompleted: Boolean
+  "Auto assign started issues to current active cycle setting."
+  cycleIssueAutoAssignStarted: Boolean
+  "Only allow issues issues with cycles in Active Issues."
+  cycleLockToActive: Boolean
+  "The day of the week that a new cycle starts."
+  cycleStartDay: Float
+  "Whether the team uses cycles."
+  cyclesEnabled: Boolean
+  "What to use as an default estimate for unestimated issues."
+  defaultIssueEstimate: Float
+  "The identifier of the default template for members of this team."
+  defaultTemplateForMembersId: String
+  "The identifier of the default template for non-members of this team."
+  defaultTemplateForNonMembersId: String
+  "The description of the team."
+  description: String
+  "Whether to group recent issue history entries."
+  groupIssueHistory: Boolean
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "Whether to allow zeros in issues estimates."
+  issueEstimationAllowZero: Boolean
+  "Whether to add additional points to the estimate scale."
+  issueEstimationExtended: Boolean
+  "The issue estimation type to use."
+  issueEstimationType: String
+  "The key of the team. If not given, rc key will be generated based on the name of the team."
+  key: String
+  "The name of the team."
+  name: String!
+  "The organization associated with the team."
+  organizationId: String
+  "The timezone of the team."
+  timezone: String
+}
+
+input TeamMembershipCreateInput {
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The identifier of the team associated with the membership."
+  teamId: String!
+  "The identifier of the user associated with the membership."
+  userId: String!
+}
+
+input TeamUpdateInput {
+  "The cooldown time after each cycle in weeks."
+  cycleCooldownTime: Int
+  "The duration of each cycle in weeks."
+  cycleDuration: Int
+  "Auto assign completed issues to current active cycle setting."
+  cycleIssueAutoAssignCompleted: Boolean
+  "Auto assign started issues to current active cycle setting."
+  cycleIssueAutoAssignStarted: Boolean
+  "Only allow issues issues with cycles in Active Issues."
+  cycleLockToActive: Boolean
+  "The day of the week that a new cycle starts."
+  cycleStartDay: Float
+  "Whether the team uses cycles."
+  cyclesEnabled: Boolean
+  "What to use as an default estimate for unestimated issues."
+  defaultIssueEstimate: Float
+  "The identifier of the default template for members of this team."
+  defaultTemplateForMembersId: String
+  "The identifier of the default template for non-members of this team."
+  defaultTemplateForNonMembersId: String
+  "The description of the team."
+  description: String
+  "The workflow state into which issues are moved when a draft PR has been opened."
+  draftWorkflowStateId: String
+  "Whether to group recent issue history entries."
+  groupIssueHistory: Boolean
+  "Whether to allow zeros in issues estimates."
+  issueEstimationAllowZero: Boolean
+  "Whether to add additional points to the estimate scale."
+  issueEstimationExtended: Boolean
+  "The issue estimation type to use."
+  issueEstimationType: String
+  "The key of the team."
+  key: String
+  "The workflow state into which issues are moved when a PR has been merged."
+  mergeWorkflowStateId: String
+  "The name of the team."
+  name: String
+  "The workflow state into which issues are moved when a review has been requested for the PR."
+  reviewWorkflowStateId: String
+  "Whether to send new issue comment notifications to Slack."
+  slackIssueComments: Boolean
+  "Whether to send issue status update notifications to Slack."
+  slackIssueStatuses: Boolean
+  "Whether to send new issue notifications to Slack."
+  slackNewIssue: Boolean
+  "The workflow state into which issues are moved when a PR has been opened."
+  startWorkflowStateId: String
+  "The timezone of the team."
+  timezone: String
+}
+
+input TemplateCreateInput {
+  "The template description."
+  description: String
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The template name."
+  name: String!
+  "The identifier or key of the team associated with the template."
+  teamId: String!
+  "The template data as JSON encoded attributes of the type of entity, such as an issue."
+  templateData: JSON!
+  "The template type (eg.: issue)."
+  type: String!
+}
+
+input TemplateUpdateInput {
+  "The template description."
+  description: String
+  "The template name."
+  name: String
+  "The template data as JSON encoded attributes of the type of entity, such as an issue."
+  templateData: JSON
+}
+
+input UpdateOrganizationInput {
+  "How git branches are formatted. If null, default formatting will be used."
+  gitBranchFormat: String
+  "The logo of the organization."
+  logoUrl: String
+  "The name of the organization."
+  name: String
+  "The URL key of the organization."
+  urlKey: String
+}
+
+input UpdateUserInput {
+  "Whether the user account is active."
+  active: Boolean
+  "Whether the user account has admin privileges."
+  admin: Boolean
+  "The users avatar image URL."
+  avatarUrl: String
+  "Reason for deactivation."
+  disableReason: String
+  "The users display name."
+  displayName: String
+  "The users name."
+  name: String
+}
+
+input UserSettingsUpdateInput {
+  "The user's settings."
+  settings: String
+  "The types of emails the user has unsubscribed from."
+  unsubscribedFrom: [String!]
+}
+
+input ViewPreferencesCreateInput {
+  "The cycle these view preferences are associated with."
+  cycleId: String
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The label these view preferences are associated with."
+  labelId: String
+  "View preferences object."
+  preferences: JSONObject!
+  "The project these view preferences are associated with."
+  projectId: String
+  "The team these view preferences are associated with."
+  teamId: String
+  "The type of the view preferences are associated with."
+  viewType: ViewType!
+}
+
+input ViewPreferencesUpdateInput {
+  "View preferences."
+  preferences: JSON!
+}
+
+input WaitListEntryCreateInput {
+  "The users email address."
+  email: String!
+}
+
+input WebhookCreateInput {
+  "Whether this webhook is enabled."
+  enabled: Boolean = true
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "An optional secret token used to sign the Webhook payload."
+  secret: String
+  "The identifier or key of the team associated with the Webhook."
+  teamId: String!
+  "The URL that will be called on data changes."
+  url: String!
+}
+
+input WebhookUpdateInput {
+  "Whether this webhook is enabled."
+  enabled: Boolean
+  "An optional secret token used to sign the Webhook payload."
+  secret: String
+  "The URL that will be called on data changes."
+  url: String
+}
+
+input WhiteListEntryCreateInput {
+  "The email address of the user who created the entry."
+  createdByEmail: String
+  "The domain to whitelist."
+  entry: String!
+  "Is the whitelist entry for testing the new onboarding."
+  newOnboarding: Boolean
+}
+
+input WorkflowStateCreateInput {
+  "The color of the state."
+  color: String!
+  "The description of the state."
+  description: String
+  "The identifier. If none is provided, the backend will generate one."
+  id: String
+  "The name of the state."
+  name: String!
+  "The position of the state."
+  position: Float
+  "The team associated with the state."
+  teamId: String!
+  "The workflow type."
+  type: String!
+}
+
+input WorkflowStateUpdateInput {
+  "The color of the state."
+  color: String
+  "The description of the state."
+  description: String
+  "The name of the state."
+  name: String
+  "The position of the state."
+  position: Float
+}
+
+
+"The javascript `Date` as string. Type represents date and time as the ISO Date string."
+scalar DateTime
+
+"The `JSON` scalar type represents JSON values"
+scalar JSON
+
+"The `JSONObject` scalar type represents JSON values as a string"
+scalar JSONObject
