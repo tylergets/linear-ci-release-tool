@@ -35,7 +35,7 @@ export default class LinearApi {
       // eslint-disable-next-line no-await-in-loop
       const data: any = await this.request(gql`
         query ($after: String){
-          issues(first: 50, after: $after) {
+          issues(first: 20, after: $after) {
             pageInfo {
               hasNextPage
               endCursor
@@ -45,6 +45,17 @@ export default class LinearApi {
               title
               state {
                   id
+              }
+              integrationResources {
+                nodes {
+                  id
+                  data {
+                    githubPullRequest {
+                      repoName
+                      url
+                    }
+                  }
+                }
               }
               labels {
                 nodes {
